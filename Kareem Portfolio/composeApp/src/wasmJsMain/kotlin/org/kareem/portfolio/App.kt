@@ -1,225 +1,215 @@
 package org.kareem.portfolio
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
-
-import kareemportfolio.composeapp.generated.resources.Res
-import kareemportfolio.composeapp.generated.resources.compose_multiplatform
-import kareemportfolio.composeapp.generated.resources.kareem
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.kareem.portfolio.common.BaseTheme
+import org.kareem.portfolio.common.DefaultText
+import org.kareem.portfolio.common.DefaultTitle
 import org.kareem.portfolio.common.HoveredAnimation
+import org.kareem.portfolio.sections.footor.Footer
+import org.kareem.portfolio.sections.footor.IconLink
+import org.kareem.portfolio.sections.footor.socials
+import org.kareem.portfolio.sections.intro.IntroSection
+import org.kareem.portfolio.sections.intro.PaddingDimensions
+import org.kareem.portfolio.sections.intro.PaddingDimensions.Large
+import org.kareem.portfolio.sections.intro.PaddingDimensions.Medium
+import org.kareem.portfolio.sections.intro.PaddingDimensions.Small
 
 @Composable
 fun App() {
+
+
+    val state = rememberLazyListState()
     BaseTheme {
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colors.onBackground).fillMaxSize(),
+            contentAlignment = Alignment.CenterEnd,
         ) {
-            item {
-                IntroSection()
-            }
-            item {
-                AboutSection()
-            }
-            item {
-                SkillsSection()
-            }
-
-            item {
-                ProjectsSection()
-
-            }
-            item {
-                ContactSection()
-
-            }
-        }
-    }
-}
-
-@Composable
-fun IntroSection() {
-    Card(
-        modifier = Modifier
-            .background(Color.Cyan)
-            .padding(40.dp),
-        elevation = 10.dp,
-        backgroundColor = MaterialTheme.colors.background
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = Modifier.weight(1f).padding(horizontal = 20.dp)
+            LazyColumn(
+                state = state,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                HoveredAnimation {
-                    Text(
-                        text = "Hi, I'm Kareem Aboelatta.",
-                        style = MaterialTheme.typography.h1,
-                        color = MaterialTheme.colors.primary
-                    )
+                item {
+                    IntroSection()
+                }
+                item {
+                    AboutSection()
+                }
+                item {
+                    SkillsSection()
                 }
 
-                Text(
-                    text = "I’m an Android developer passionate about building efficient, user-friendly mobile applications. With experience in Kotlin, Java, and Flutter, I strive to stay up-to-date with the latest technologies to deliver high-quality solutions. I’m always eager to learn, grow, and contribute to exciting projects.\n",
-                    style = MaterialTheme.typography.h4
+                item {
+                    ProjectsSection()
+
+                }
+                item {
+                    Footer()
+                }
+            }
+            AnimatedVisibility(
+                (state.firstVisibleItemIndex > 0).not()
+            ) {
+                VerticalSocials()
+            }
+        }
+
+
+
+    }
+
+}
+
+
+@Composable
+fun VerticalSocials(
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier.padding(PaddingDimensions.xxxxLarge),
+        elevation = PaddingDimensions.xxLarge,
+        backgroundColor = MaterialTheme.colors.onBackground
+    ) {
+        Column(
+            modifier = Modifier.padding(
+                Small
+            )
+        ) {
+            socials.forEach {
+                IconLink(
+                    modifier = Modifier.padding(
+                       vertical =  Large,
+                        horizontal = Small
+                    ),
+                    image = it.image,
+                    link = it.link,
+                    contentDescription = it.contentDescription
                 )
             }
 
-            HoveredAnimation(scaleRate = 1.2f) {
-                Image(
-                    painter = painterResource(Res.drawable.kareem),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(30.dp)
-                        .clip(CircleShape)
-                        .size(550.dp)
-                )
-            }
         }
     }
 }
 
+@Preview
 @Composable
 fun AboutSection() {
-    Column(
+    Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.LightGray)
-            .padding(40.dp)
+            .padding(Large),
+        elevation = Large,
     ) {
-        HoveredAnimation {
-            Text(
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Small)
+        ) {
+            DefaultTitle(
                 text = "About Me",
-                style = MaterialTheme.typography.h3,
-                color = MaterialTheme.colors.primary
+            )
+
+            DefaultText(
+                modifier = Modifier.padding(start = PaddingDimensions.xLarge),
+                text = "With over four years of experience in the industry, I bring a keen eye for detail, a passion for problem-solving," +
+                        " and a commitment to delivering solutions that truly meet my clients’ needs. I take pride in clear communication," +
+                        " reliable results, and the ability to adapt quickly to new challenges. Whether working independently or as part of a team," +
+                        " I approach every project with professionalism, creativity, and the drive to help businesses thrive." +
+                        "I value both collaboration and self-learning, constantly seeking opportunities to grow as a developer. " +
+                        "I strive to stay up-to-date with the latest technologies to deliver high-quality solutions." +
+                        " I’m always eager to learn, grow, and contribute to exciting projects.",
             )
         }
-
-        Text(
-            text = "With a deep passion for software development, I enjoy crafting solutions that simplify user experiences. Over the years, I've developed Android applications using Kotlin, Java, and Flutter, and continue to refine my craft in this ever-evolving industry. I value both collaboration and self-learning, constantly seeking opportunities to grow as a developer.",
-            style = MaterialTheme.typography.body1
-        )
     }
+
 }
 
 @Composable
 fun SkillsSection() {
-    Column(
+    Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFFE0F7FA)) // Light blue background
-            .padding(40.dp)
+            .padding(Large),
+        elevation = Large,
     ) {
-        HoveredAnimation {
-            Text(
-                text = "Skills",
-                style = MaterialTheme.typography.h3,
-                color = MaterialTheme.colors.primary
-            )
-        }
-
         Column(
-            modifier = Modifier.padding(top = 20.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(PaddingDimensions.Small)
         ) {
-            Text(
-                text = "• Kotlin, Java, Flutter",
-                style = MaterialTheme.typography.body1
-            )
-            Text(
-                text = "• MVVM, MVP, MVI Architecture",
-                style = MaterialTheme.typography.body1
-            )
-            Text(
-                text = "• Jetpack Compose, UI/UX Design",
-                style = MaterialTheme.typography.body1
-            )
-            Text(
-                text = "• Coroutines, RX Java",
-                style = MaterialTheme.typography.body1
-            )
-            Text(
-                text = "• Dependency Injection, Dagger Hilt, Koin",
-                style = MaterialTheme.typography.body1
-            )
-            Text(
-                text = "• Firebase, Room, Apollo GraphQL",
-                style = MaterialTheme.typography.body1
-            )
+            HoveredAnimation {
+                Text(
+                    text = "Skills",
+                    style = MaterialTheme.typography.h3,
+                    color = MaterialTheme.colors.primary
+                )
+            }
+
+            Column(
+                modifier = Modifier.padding(top = 20.dp)
+            ) {
+                DefaultText(
+                    text = "• Kotlin, Java, Flutter",
+                )
+                DefaultText(
+                    text = "• MVVM, MVP, MVI Architecture",
+                )
+                DefaultText(
+                    text = "• Jetpack Compose, UI/UX Design",
+                )
+                DefaultText(
+                    text = "• Coroutines, RX Java",
+                )
+                DefaultText(
+                    text = "• Dependency Injection, Dagger Hilt, Koin",
+                )
+                DefaultText(
+                    text = "• Firebase, Room, Apollo GraphQL",
+                )
+            }
         }
     }
+
 }
 
 @Composable
 fun ProjectsSection() {
-    Column(
+    Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFFFFF59D)) // Light yellow background
-            .padding(40.dp)
+            .padding(Large),
+        elevation = Large,
     ) {
-        HoveredAnimation {
-            Text(
-                text = "Projects",
-                style = MaterialTheme.typography.h3,
-                color = MaterialTheme.colors.primary
-            )
-        }
-
-        Text(
-            text = "Here are some of the applications I've worked on:\n\n• **Otluo**: A Quranic app with over 100,000 downloads.\n• **Tmeny**: A parenting app with over 50,000 downloads.\n• **Mind More**: A mental health support app with features like real-time video counseling.\n",
-            style = MaterialTheme.typography.body1
-        )
-    }
-}
-
-@Composable
-fun ContactSection() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFF80CBC4)) // Teal background
-            .padding(40.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HoveredAnimation {
-            Text(
-                text = "Contact Me",
-                style = MaterialTheme.typography.h3,
-                color = MaterialTheme.colors.primary
-            )
-        }
-
-        Text(
-            text = "Feel free to reach out to me for collaboration or inquiries. You can contact me via email, LinkedIn, or GitHub:",
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(top = 20.dp)
-        )
-
-        Button(
-            onClick = { /* Handle Contact Button Click */ },
-            modifier = Modifier.padding(top = 20.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(PaddingDimensions.Small)
         ) {
-            Text(text = "Contact Me")
+            HoveredAnimation {
+                Text(
+                    text = "Projects",
+                    style = MaterialTheme.typography.h3,
+                    color = MaterialTheme.colors.primary
+                )
+            }
+
+            Text(
+                text = "Here are some of the applications I've worked on:\n\n• **Otluo**: A Quranic app with over 100,000 downloads.\n• **Tmeny**: A parenting app with over 50,000 downloads.\n• **Mind More**: A mental health support app with features like real-time video counseling.\n",
+                style = MaterialTheme.typography.body1
+            )
         }
     }
+
 }
+
+
+

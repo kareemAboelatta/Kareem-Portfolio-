@@ -13,7 +13,8 @@ import androidx.compose.ui.draw.scale
 @Composable
 fun HoveredAnimation(
     modifier: Modifier = Modifier,
-    scaleRate: Float = 1.0f,
+    expandedScale: Float = 1.0f,
+    collapsedScale: Float = 0.9f,
     content: @Composable () -> Unit
 ){
     val interactionSource = remember { MutableInteractionSource() }
@@ -45,7 +46,7 @@ fun HoveredAnimation(
     }
 
     val isHovered = interactionSource.collectIsHoveredAsState().value
-    val scale by animateFloatAsState(targetValue = if (isHovered) scaleRate else 0.8f, label = "scale")
+    val scale by animateFloatAsState(targetValue = if (isHovered) expandedScale else collapsedScale , label = "scale")
 
 
 

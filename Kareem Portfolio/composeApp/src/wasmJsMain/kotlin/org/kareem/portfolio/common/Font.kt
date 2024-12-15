@@ -12,7 +12,6 @@ import kareemportfolio.composeapp.generated.resources.Res
 import kareemportfolio.composeapp.generated.resources.app_font
 import org.jetbrains.compose.resources.Font
 
-
 @Composable
 fun nunitoRegular() = FontFamily(
     Font(
@@ -30,72 +29,60 @@ fun nunitoSemiBold() = FontFamily(
 @Composable
 fun nunitoBold() = FontFamily(
     Font(
-        Res.font.app_font, FontWeight.Normal, FontStyle.Normal
+        Res.font.app_font, FontWeight.Bold, FontStyle.Normal
     )
 )
 
 @Composable
 fun getTypography(): Typography {
-    return androidx.compose.material.Typography(
+    val colors = MaterialTheme.colors
 
-        /** display **/
+    return Typography(
         h1 = TextStyle(
             fontFamily = nunitoBold(),
             fontWeight = FontWeight.Bold,
-            fontSize = 57.sp,  // Recommended size for displayLarge in Material 3
-            letterSpacing = (-0.25).sp,  // Recommended letterSpacing
-            color = MaterialTheme.colors.primary
+            fontSize = 57.sp,
+            letterSpacing = (-0.25).sp,
+            color = colors.onBackground // Headline text uses onBackground
         ),
-
         h2 = TextStyle(
             fontFamily = nunitoBold(),
             fontWeight = FontWeight.Bold,
-            fontSize = 45.sp,  // Recommended size for displayMedium in Material 3
-            letterSpacing = 0.sp,  // Recommended letterSpacing
-            color = MaterialTheme.colors.primary
+            fontSize = 45.sp,
+            color = colors.onBackground // Headline text uses onBackground
         ),
-
         h3 = TextStyle(
             fontFamily = nunitoBold(),
             fontWeight = FontWeight.Bold,
-            fontSize = 36.sp,  // Recommended size for displaySmall in Material 3
-            letterSpacing = 0.sp,  // Recommended letterSpacing
-            color = MaterialTheme.colors.primary
+            fontSize = 36.sp,
+            color = colors.onBackground // Headline text uses onBackground
         ),
-
-        /** headline **/
         h4 = TextStyle(
             fontFamily = nunitoSemiBold(),
             fontWeight = FontWeight.Bold,
-            fontSize = 32.sp,  // Recommended size for headlineLarge in Material 3
-            letterSpacing = 0.sp,  // Recommended letterSpacing
-            color = MaterialTheme.colors.primary
+            fontSize = 32.sp,
+            color = colors.onBackground // Headline text uses onBackground
         ),
-
-
-        /** body **/
         body1 = TextStyle(
             fontFamily = nunitoRegular(),
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp,  // Recommended size for bodyLarge in Material 3
-            letterSpacing = 0.5.sp,  // Recommended letterSpacing
-            color = MaterialTheme.colors.primary
+            fontWeight = FontWeight.Normal,
+            fontSize = 25.sp,
+            letterSpacing = 0.5.sp,
+            color = colors.primary // Body text uses onSurface
         ),
         body2 = TextStyle(
             fontFamily = nunitoRegular(),
-            fontWeight = FontWeight.Thin,
-            fontSize = 14.sp,  // Recommended size for bodyMedium in Material 3
-            letterSpacing = 0.25.sp,  // Recommended letterSpacing
-            color = MaterialTheme.colors.onBackground
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            letterSpacing = 0.25.sp,
+            color = colors.onSurface // Body text uses onSurface
         ),
-        button =  TextStyle(
+        button = TextStyle(
             fontFamily = nunitoBold(),
             fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,  // Recommended size for displayMedium in Material 3
-            letterSpacing = 0.sp,  // Recommended letterSpacing
-            color = MaterialTheme.colors.primary
+            fontSize = 16.sp,
+            color = colors.onPrimary // Button text uses onPrimary since buttons often have primary backgrounds
         ),
 
     )
-
 }
