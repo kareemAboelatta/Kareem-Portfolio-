@@ -63,7 +63,6 @@ fun Footer() {
 @Composable
 fun IconLink(
     modifier: Modifier = Modifier,
-
     image: DrawableResource,
     link: String,
     contentDescription: String
@@ -78,7 +77,7 @@ fun IconLink(
         Image(
             painter = painterResource(image),
             contentDescription = contentDescription,
-            modifier = Modifier.size(60.dp).clickable {
+            modifier = Modifier.size(50.dp).clickable {
                 uriHandler.openUri(link)
             })
     }

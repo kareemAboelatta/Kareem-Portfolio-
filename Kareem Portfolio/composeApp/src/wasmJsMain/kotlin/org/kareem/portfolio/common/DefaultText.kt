@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.*
 
@@ -37,6 +38,7 @@ fun DefaultTitle(
     fontSize: TextUnit = MaterialTheme.typography.h2.fontSize,
     expandedScale: Float = 1.0f,
     collapsedScale: Float = 0.9f,
+    textAlign: TextAlign? = null,
     textDecoration: TextDecoration? = null,
 
     ) {
@@ -50,6 +52,7 @@ fun DefaultTitle(
             style = textStyle,
             color = textColor,
             fontSize = fontSize,
+            textAlign = textAlign,
             textDecoration = textDecoration
         )
     }

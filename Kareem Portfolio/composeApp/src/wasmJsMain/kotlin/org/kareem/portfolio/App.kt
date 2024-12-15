@@ -13,23 +13,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.kareem.portfolio.common.BaseTheme
-import org.kareem.portfolio.common.DefaultText
-import org.kareem.portfolio.common.DefaultTitle
-import org.kareem.portfolio.common.HoveredAnimation
+import org.kareem.portfolio.common.*
+import org.kareem.portfolio.common.PaddingDimensions.Small
+import org.kareem.portfolio.common.PaddingDimensions.Large
+import org.kareem.portfolio.common.PaddingDimensions.Medium
+import org.kareem.portfolio.common.PaddingDimensions.Small
+import org.kareem.portfolio.common.PaddingDimensions.VerySmall
+import org.kareem.portfolio.common.PaddingDimensions.xxLarge
 import org.kareem.portfolio.sections.footor.Footer
 import org.kareem.portfolio.sections.footor.IconLink
 import org.kareem.portfolio.sections.footor.socials
 import org.kareem.portfolio.sections.intro.IntroSection
-import org.kareem.portfolio.sections.intro.PaddingDimensions
-import org.kareem.portfolio.sections.intro.PaddingDimensions.Large
-import org.kareem.portfolio.sections.intro.PaddingDimensions.Medium
-import org.kareem.portfolio.sections.intro.PaddingDimensions.Small
 
 @Composable
 fun App() {
-
-
     val state = rememberLazyListState()
     BaseTheme {
         Box(
@@ -84,13 +81,13 @@ fun VerticalSocials(
     ) {
         Column(
             modifier = Modifier.padding(
-                Small
+                VerySmall
             )
         ) {
             socials.forEach {
                 IconLink(
                     modifier = Modifier.padding(
-                       vertical =  Large,
+                       vertical =  xxLarge,
                         horizontal = Small
                     ),
                     image = it.image,
