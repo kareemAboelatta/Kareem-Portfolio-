@@ -1,5 +1,6 @@
 package org.kareem.portfolio.sections.intro
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -15,7 +16,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
 import kareemportfolio.composeapp.generated.resources.Res
 import kareemportfolio.composeapp.generated.resources.kareem
 import org.jetbrains.compose.resources.painterResource
@@ -24,54 +24,67 @@ import org.kareem.portfolio.common.InfiniteScaleAnimation
 import org.kareem.portfolio.common.PaddingDimensions.Large
 import org.kareem.portfolio.common.PaddingDimensions.Medium
 import org.kareem.portfolio.common.PaddingDimensions.Small
-
+import org.kareem.portfolio.common.ResponsiveScaling
 
 @Composable
 fun IntroSection() {
-
     Card(
-        modifier = Modifier
-            .padding(Large),
+        modifier = Modifier.padding(Large),
         elevation = 10.dp,
     ) {
         BoxWithConstraints {
             val width = maxWidth
             val isSmallScreen = width < 700.dp
 
-            print("isSmallScreen: $isSmallScreen")
             if (isSmallScreen) {
-                Vertically()
-            } else
-                Horizontally(maxWidth)
-
+                VerticallyLayout(width = width)
+            } else {
+                HorizontallyLayout(width = width)
+            }
         }
-
-
     }
 }
 
-
 @Composable
-private fun Vertically() {
+private fun VerticallyLayout(width: Dp) {
+    // Example: scale image sizes for small screens as well
+    val cardSize = ResponsiveScaling.scaledDp(
+        width = width,
+        minWidth = 300.dp,
+        maxWidth = 700.dp,
+        minSize = 150.dp,
+        maxSize = 250.dp
+    )
+    val imageRatio = 1.25f // You can adjust this ratio if needed
+    val imageSize = cardSize * imageRatio
+
+    // Scale text sizes as needed (for vertical layout, you might keep smaller fonts)
+    val titleFontSize = ResponsiveScaling.scaledFontSize(
+        width = width,
+        minWidth = 300.dp,
+        maxWidth = 700.dp,
+        minSize = 20f,
+        maxSize = 40f
+    ).sp
+
     Column(
-        modifier = Modifier.padding(Small).fillMaxWidth(),
+        modifier = Modifier
+            .padding(Small)
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         DefaultTitle(
             text = "Hello, I'm Kareem Aboelatta",
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            fontSize = titleFontSize
         )
 
-        Box(
-            contentAlignment = Alignment.BottomCenter
-        ) {
+        Box(contentAlignment = Alignment.BottomCenter) {
             Card(
-                modifier = Modifier
-                    .size(200.dp),
+                modifier = Modifier.size(cardSize),
                 backgroundColor = MaterialTheme.colors.primary
             ) {}
-            InfiniteScaleAnimation(
-            ) {
+            InfiniteScaleAnimation {
                 Image(
                     painter = painterResource(Res.drawable.kareem),
                     contentScale = ContentScale.Crop,
@@ -79,19 +92,18 @@ private fun Vertically() {
                     modifier = Modifier
                         .padding(Medium)
                         .clip(CircleShape)
-                        .size(250.dp)
+                        .size(imageSize)
                 )
             }
         }
 
         DefaultTitle(
             text = "Mobile Developer",
-            fontSize = 30.sp,
+            fontSize = (titleFontSize * 1.2f), // Slightly larger than the above titleFontSize
             textStyle = MaterialTheme.typography.h1,
             collapsedScale = 1f,
             expandedScale = 1.05f,
             textAlign = TextAlign.Center
-
         )
 
         DefaultTitle(
@@ -101,54 +113,25 @@ private fun Vertically() {
             textAlign = TextAlign.Center,
             textColor = MaterialTheme.colors.secondary
         )
-
     }
-
-}
-
-fun scaledDpFromWidth(
-    width: Dp,
-    minWidth: Dp,
-    maxWidth: Dp,
-    minSize: Dp,
-    maxSize: Dp
-): Dp {
-    val clampedWidth = width.coerceIn(minWidth, maxWidth)
-    val fraction = (clampedWidth - minWidth) / (maxWidth - minWidth)
-    return minSize + (fraction * (maxSize - minSize))
 }
 
 @Composable
-fun scaledFontSizeFromWidth(width: Dp): Float {
-    // Define a range for width and corresponding font sizes
-    val minWidth = 700.dp
-    val maxWidth = 1200.dp
-    val minSize = 40f
-    val maxSize = 130f
+private fun HorizontallyLayout(width: Dp) {
+    // Scale font size based on width
+    val titleFontSize = ResponsiveScaling.scaledFontSize(width).sp
 
-    val clampedWidth = width.coerceIn(minWidth, maxWidth)
-    val fraction = (clampedWidth - minWidth).value / (maxWidth - minWidth).value
-    return (minSize + (fraction * (maxSize - minSize)))
-}
-
-
-@Composable
-private fun Horizontally(maxWidth: Dp) {
-    val titleFontSize = scaledFontSizeFromWidth(maxWidth).sp
-
-    // Scale card size between 200dp and 400dp as width goes from 700dp to 1200dp
-    val cardSize = scaledDpFromWidth(
-        width = maxWidth,
+    // Scale card and image sizes:
+    val cardSize = ResponsiveScaling.scaledDp(
+        width = width,
         minWidth = 700.dp,
         maxWidth = 1200.dp,
         minSize = 200.dp,
         maxSize = 400.dp
     )
 
-    // Let's say we keep the same ratio between image and card.
-    // If originally 400dp card had a 550dp image, ratio = 550/400 = 1.375.
-    val imageSize = cardSize * 1.375f
-
+    val imageRatio = 1.375f
+    val imageSize = cardSize * imageRatio
 
     Row(
         modifier = Modifier
@@ -163,6 +146,7 @@ private fun Horizontally(maxWidth: Dp) {
         ) {
             DefaultTitle(
                 text = "Hello, I'm Kareem Aboelatta",
+                fontSize = (titleFontSize * 0.35f) // Slightly smaller variant if you want
             )
 
             DefaultTitle(
@@ -186,6 +170,7 @@ private fun Horizontally(maxWidth: Dp) {
                 modifier = Modifier.size(cardSize),
                 backgroundColor = MaterialTheme.colors.primary
             ) {}
+
             InfiniteScaleAnimation {
                 Image(
                     painter = painterResource(Res.drawable.kareem),

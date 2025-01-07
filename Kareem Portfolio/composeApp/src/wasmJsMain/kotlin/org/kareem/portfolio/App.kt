@@ -24,6 +24,7 @@ import org.kareem.portfolio.sections.footor.Footer
 import org.kareem.portfolio.sections.footor.IconLink
 import org.kareem.portfolio.sections.footor.socials
 import org.kareem.portfolio.sections.intro.IntroSection
+import org.kareem.portfolio.sections.projects.ProjectsSection
 
 @Composable
 fun App() {
@@ -40,6 +41,7 @@ fun App() {
             ) {
                 item {
                     IntroSection()
+
                 }
                 item {
                     AboutSection()
@@ -48,10 +50,9 @@ fun App() {
                     SkillsSection()
                 }
 
-                item {
-                    ProjectsSection()
-
-                }
+//                item {
+//                    ProjectsSection()
+//                }
                 item {
                     Footer()
                 }
@@ -179,34 +180,7 @@ fun SkillsSection() {
 
 }
 
-@Composable
-fun ProjectsSection() {
-    Card(
-        modifier = Modifier
-            .padding(Large),
-        elevation = Large,
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(PaddingDimensions.Small)
-        ) {
-            HoveredAnimation {
-                Text(
-                    text = "Projects",
-                    style = MaterialTheme.typography.h3,
-                    color = MaterialTheme.colors.primary
-                )
-            }
 
-            Text(
-                text = "Here are some of the applications I've worked on:\n\n• **Otluo**: A Quranic app with over 100,000 downloads.\n• **Tmeny**: A parenting app with over 50,000 downloads.\n• **Mind More**: A mental health support app with features like real-time video counseling.\n",
-                style = MaterialTheme.typography.body1
-            )
-        }
-    }
-
-}
 
 
 
